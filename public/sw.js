@@ -1,11 +1,11 @@
-const CACHE = 'alpha-proxima-one-v0.1.0'
+const CACHE = 'alpha-proxima-one-v0.1.1'
 self.addEventListener('install', event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE)
     const response = await fetch('/')
     const html = await response.clone().text()
     await cache.put('/', response)
-    await cache.addAll(['/manifest.webmanifest','/icons/icon.svg'])
+    await cache.addAll(['/manifest.webmanifest','/icons/icon.svg','/icons/apple-touch-icon.png'])
     const assets = [...html.matchAll(/(?:src|href)="([^\"]+\.(?:js|css))"/g)].map(match => match[1])
     await Promise.all(assets.map(async url => { const asset = await fetch(url); if (asset.ok) await cache.put(url, asset) }))
   })())
