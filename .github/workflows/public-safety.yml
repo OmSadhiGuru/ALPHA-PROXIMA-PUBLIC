@@ -1,0 +1,25 @@
+name: Public safety gate
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  public-safety:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout public repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Scan public files (no Vault content or obvious secrets)
+        run: python scripts/check_public_safety.py
+      - name: Run safety tests
+        run: python -m unittest discover -s tests -v
+      - name: Validate JavaScript syntax
+        run: node --check public/assets/app.js
