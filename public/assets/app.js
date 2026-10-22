@@ -82,8 +82,8 @@
     });
     const toggle = document.getElementById('language-toggle');
     if (toggle) {
-      toggle.textContent = lang === 'fr' ? 'EN ↗' : 'FR ↗';
-      toggle.setAttribute('aria-label', lang === 'fr' ? 'Switch language to English' : 'Passer en français');
+      toggle.firstChild.textContent = lang === 'fr' ? 'EN ' : 'FR ';
+      toggle.setAttribute('aria-label', lang === 'fr' ? 'EN — Switch language to English' : 'FR — Passer en français');
     }
     document.querySelector('meta[name="description"]')?.setAttribute('content', lang === 'fr'
       ? "ALPHA PROXIMA : une architecture de collaboration entre humains et systèmes d'IA, construite avec rigueur et responsabilité."
