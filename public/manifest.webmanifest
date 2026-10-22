@@ -1,0 +1,11 @@
+{
+  "name": "ALPHA PROXIMA ONE",
+  "short_name": "AP ONE",
+  "description": "One life. One evolving system.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#100f12",
+  "theme_color": "#100f12",
+  "icons": [{ "src": "/icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }]
+}
