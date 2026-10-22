@@ -28,9 +28,18 @@ ALPHA PROXIMA ONE can grow into one personal control surface for several AI prov
 - A system connector (for example, a calendar or knowledge store) is a separate adapter with its own narrow permissions. Connecting a model must not automatically grant it access to every connected system.
 - The registry describes available providers and connectors. It contains capability metadata and status, never provider secrets.
 
+### Local models, Google identity, and provider authentication
+
+- **Local models are preferred when suitable and available.** A local-model adapter connects to a runtime installed and controlled by the user on their device or trusted network. Local inference does not require a Google account or cloud provider account.
+- **Google sign-in is optional identity, not a universal AI key.** If a future version adds Google sign-in for identity or Google services, consent and scopes must be limited to that purpose. A Google session does not automatically authenticate the user to Anthropic, OpenAI, or other model APIs.
+- **Each cloud provider has its own connection and consent.** Use that provider's supported OAuth flow when available; otherwise require an explicit provider credential supplied by the user. Show provider, account, scopes, and connection status separately. Disconnecting one provider must not affect another provider or local models.
+- **Keep credentials out of app data and exports.** Never put long-lived API keys or refresh tokens in IndexedDB, localStorage, backups, source control, or the public JavaScript bundle. A future implementation needs a platform credential store or a narrowly scoped local companion that holds secrets; do not add a backend proxy without a separate privacy and security design.
+- **Local routing must not quietly become cloud routing.** If no suitable local model is available, explain that and ask before sending the task or selected context to a cloud provider. Store user preferences per task category, while keeping a visible provider override available.
+- **Treat local endpoints as a security boundary too.** Only connect to a runtime the user explicitly selects, disclose where it runs, and constrain origins and permissions. A hosted PWA talking to loopback or private-network model runtimes needs a tested browser-compatible design; do not solve this by accepting arbitrary endpoints.
+
 ### Task-routing flow
 
-1. The user captures a task and may choose a provider directly or ask the hub to recommend one.
+1. The user captures a task and may choose a model directly or ask the hub to recommend one. A configured local model is preferred when it meets the task requirements.
 2. A routing policy compares the task's declared needs with configured capabilities, user privacy rules, availability, and optional cost/latency preferences.
 3. Before sending content outside the device, the hub shows the selected provider, the context that will be sent, and any available cost information, then asks for consent unless the user has configured a narrow reusable permission.
 4. The provider returns a proposal or result. ALPHA PROXIMA ONE presents it for user review; the model does not silently change goals, records, settings, or external systems.
@@ -40,7 +49,7 @@ If a provider is unavailable, the hub reports that state and offers an explicit 
 
 ### Claude Code and Claude models
 
-Claude Code is a development tool for working on the repository. It can help inspect and change code under a reviewed feature-branch workflow; it is not itself a model-routing API or an always-on runtime agent inside the installed app. If the product later supports Anthropic Claude at runtime, that should be a distinct, opt-in Anthropic API adapter with user-configured credentials held outside the public repository and browser bundle.
+Claude Code is a development tool for working on the repository. It can help inspect and change code under a reviewed feature-branch workflow; it is not itself a model-routing API or an always-on runtime agent inside the installed app. If the product later supports Anthropic Claude at runtime, that should be a distinct, opt-in Anthropic API adapter with its own user-controlled authentication and credentials held outside the public repository, browser bundle, and exported app data.
 
 ### Runtime boundary and staged implementation
 

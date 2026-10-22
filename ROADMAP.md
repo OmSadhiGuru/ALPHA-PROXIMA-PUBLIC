@@ -10,9 +10,9 @@
 
 1. Run device QA on iPhone/iPad and desktop browsers; confirm install and offline update behavior.
 2. Add robust browser-level user-flow tests for persistence and backup round trips.
-3. Prototype a provider-neutral Personal Intelligence Hub with a mock router, capability registry, visible routing rationale, and consent/approval flow. Keep every live AI provider disabled until configured.
+3. Prototype a provider-neutral Personal Intelligence Hub with a mock router, capability registry, visible routing rationale, and consent/approval flow. Prefer a configured local model when suitable; require a separate connection and consent for each cloud provider.
 4. Design opt-in encrypted backup and sync threat models before implementing any remote service.
 
-Claude Code may be used as a development assistant on reviewed feature branches. Runtime Claude support, if selected later, means an Anthropic API adapter and requires separate configuration; the Claude Code CLI itself is not the in-app model router.
+Google identity, if added, is optional and separate from model-provider authentication. It does not provide universal access to other vendors' APIs. Claude Code may be used as a development assistant on reviewed feature branches. Runtime Claude support, if selected later, means a distinct Anthropic API adapter; the Claude Code CLI itself is not the in-app model router.
 
 Each addition should preserve exportability and make data movement explicit.
