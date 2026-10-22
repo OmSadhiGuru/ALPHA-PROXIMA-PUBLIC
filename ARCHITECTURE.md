@@ -17,6 +17,31 @@ Do not change the meaning or remove fields from an existing schema in place. Inc
 
 The app is a public application layer. It contains no private Core material or user records. Browser storage is scoped to the browser profile/device and is not durable backup. The user remains responsible for exporting and protecting backups.
 
+## Architecture decisions
+
+Decisions recorded here are binding for all contributors, human or AI. Changing one requires a new decision that explicitly supersedes it; do not work around a decision silently.
+
+### ADR-001 — One application and one source of data for ALPHA PROXIMA ONE and OSG Life OS
+
+- **Status:** Accepted
+- **Date:** 2026-10-21
+- **Decided by:** the Founder
+
+**Context.** OSG Life OS already exists as separate interactive pages (a long-range roadmap, a 12-week sprint view, and a Life OS dashboard), and a merge into one centralized dashboard was planned. ALPHA PROXIMA ONE now provides overlapping capabilities (daily focus, goals, projects, tasks, journal). Building both independently would create two parallel life systems whose data and behavior diverge.
+
+**Decision.** ALPHA PROXIMA ONE is the single technical foundation for the future merge with OSG Life OS. There is one application and one source of data. OSG Life OS is integrated progressively into ALPHA PROXIMA ONE as experiences or modules; it is not rebuilt as a parallel system.
+
+**Consequences.**
+
+- OSG Life OS features become screens, views or modules inside this application, sharing its navigation, settings, language and theme.
+- All records live in the same local database (`alpha-proxima-one`). New record types are added through the versioned migration path in `src/db.ts`, never through a separate database or storage location.
+- The backup format stays single: every module's data is included in the same export and restore, with a backup-version converter whenever the format changes.
+- A module reuses existing concepts (goals, projects, tasks, journal) before introducing new ones. A long-range roadmap or a 12-week sprint, for example, should be expressed as views over goals, projects and tasks, or as extensions of them, rather than as duplicate data.
+- Existing OSG Life OS pages are treated as design references and migration sources. Importing their content is a one-way, explicit, user-confirmed operation.
+- Any proposal for a second application, a second data store, or a sync between two systems requires a new ADR that supersedes this one.
+
+**Related:** [Compatibility and migrations](#compatibility-and-migrations), [Roadmap](ROADMAP.md).
+
 ## Long-term direction — Personal Intelligence Hub
 
 ALPHA PROXIMA ONE can grow into one personal control surface for several AI providers and personal systems. This is a future architecture direction, **not an enabled v0.1 capability**.

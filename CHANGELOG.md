@@ -7,6 +7,7 @@
 - Fixed: editing a task from Home now keeps its project.
 - Added: 180×180 opaque `apple-touch-icon` for iPhone/iPad home screens (source in `design/icons/`).
 - Tests: time-zone coverage for local dates and a UI test for cancel-then-create on captures.
+- Docs: ADR-001 in `ARCHITECTURE.md` — ALPHA PROXIMA ONE is the single application and single data source for the future merge with OSG Life OS.
 
 ## 0.1.0 — Foundation MVP
 
